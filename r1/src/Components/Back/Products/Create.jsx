@@ -42,6 +42,8 @@ function Create() {
                     setPrice('');
                     setInStock(false);
                     setCat('0');
+                    setPhotoPrint(null);
+                    fileInput.current.value = null
                     }
 
     return (
@@ -80,7 +82,6 @@ function Create() {
                 {
                     photoPrint ? <div className="photo-bin"><img src={photoPrint} alt="img"/></div> : null
                 }
-               
                 <button type="button" className="btn btn-outline-primary" onClick={handleCreate}>Create</button>
             </div>
         </div>

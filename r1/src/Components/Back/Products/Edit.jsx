@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { useEffect, useState, useContext } from "react";
 import BackContext from "../BackContext";
+import getBase64 from "../../../Functions/getBase64";
 
 function Edit() {
 
@@ -11,6 +13,9 @@ function Edit() {
     const [inStock, setInStock] = useState(false);
     const [cat, setCat] = useState('0');
     const [lu, setLu] = useState('');
+    const fileInput = useRef();
+    const [photoPrint, setPhotoPrint] = useState(null);
+
 
     const setDateFormat = d => {
         //yyyy-MM-ddThh:mm
@@ -24,6 +29,14 @@ function Edit() {
         return out;
     }
 
+    const doPhoto = () => {
+        getBase64(fileInput.current.files[0])
+        .then(photo => setPhotoPrint(photo))
+        .catch(_ => {
+            //tylim
+        })
+    }
+
     useEffect(() => {
         if (null === modalProduct) {
             return;
@@ -33,6 +46,7 @@ function Edit() {
         setLu(setDateFormat(modalProduct.lu));
         setInStock(modalProduct.in_stock ? true : false);
         setCat(cats.filter(c => c.title === modalProduct.cat)[0].id);
+        setPhotoPrint(modalProduct.photo);
     }, [modalProduct, cats]);
 
     const handleEdit = () => {
@@ -42,7 +56,8 @@ function Edit() {
             in_stock: inStock ? 1 : 0,
             price: parseFloat(price),
             cat: parseInt(cat),
-            lu: lu
+            lu: lu,
+            photo: photoPrint
          };
         setEditProduct(data);
         setModalProduct(null);
@@ -54,7 +69,7 @@ function Edit() {
 
     return (
         <div className="modal">
-            <div className="modal-dialog modal-dialog-centered">
+            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Product Changer</h5>
@@ -92,6 +107,14 @@ function Edit() {
                             </select>
                             <small className="form-text text-muted">Select category here.</small>
                         </div>
+                        <div className="form-group">
+                            <label>Photo</label>
+                            <input ref={fileInput} type="file" className="form-control" onChange={doPhoto} />
+                            <small className="form-text text-muted">Upload Photo.</small>
+                        </div>
+                        {
+                            photoPrint ? <div className="photo-bin"><img src={photoPrint} alt="nice" /></div> : null
+                        }
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" onClick={() => setModalProduct(null)}>Close</button>
