@@ -4,6 +4,8 @@ const port = 3003;
 const cors = require("cors");
 app.use(cors());
 const mysql = require("mysql");
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
 app.use(
     express.urlencoded({
         extended: true,
@@ -72,10 +74,10 @@ app.put("/admin/cats/:id", (req, res) => {
 app.post("/admin/products", (req, res) => {
     const sql = `
     INSERT INTO products
-    (title, price, in_stock, cats_id)
+    (title, price, in_stock, cats_id, photo)
     VALUES (?, ?, ?, ?)
     `;
-    con.query(sql, [req.body.title, req.body.price, req.body.inStock, req.body.cat], (err, result) => {
+    con.query(sql, [req.body.title, req.body.price, req.body.inStock, req.body.cat, req.body.photo], (err, result) => {
         if (err) throw err;
         res.send({ result, msg: { text: 'OK, new and shiny product was created', type: 'success' } });
     });
