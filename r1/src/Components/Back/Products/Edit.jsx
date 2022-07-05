@@ -5,7 +5,7 @@ import getBase64 from "../../../Functions/getBase64";
 
 function Edit() {
 
-    const { cats, modalProduct, setEditProduct, setModalProduct } = useContext(BackContext);
+    const { cats, modalProduct, setEditProduct, setModalProduct, setDeletePhoto } = useContext(BackContext);
 
 
     const [title, setTitle] = useState('');
@@ -36,7 +36,10 @@ function Edit() {
             //tylim
         })
     }
-
+    const handleDeletePhoto = () => {
+        setDeletePhoto({id: modalProduct.id});
+        setModalProduct(p => ({...p, photo: null}));
+    }
     useEffect(() => {
         if (null === modalProduct) {
             return;
@@ -119,6 +122,7 @@ function Edit() {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-outline-secondary" onClick={() => setModalProduct(null)}>Close</button>
                         <button type="button" className="btn btn-outline-primary" onClick={handleEdit}>Save changes</button>
+                        <button type="button" className="btn btn-outline-danger" onClick={handleDeletePhoto}>Remove Photo</button>
                     </div>
                 </div>
             </div>

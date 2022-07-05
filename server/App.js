@@ -119,7 +119,17 @@ app.put("/admin/products/:id", (req, res) => {
     });
 });
 
-
+app.delete("/admin/photos/:id", (req, res) => {
+    const sql = `
+    UPDATE products
+    SET photo = null
+    WHERE id = ?
+    `;
+    con.query(sql, [req.params.id], (err, result) => {
+        if (err) throw err;
+        res.send({ result, msg: { text: 'OK, photo gone. Have a nice day.', type: 'success' } });
+    });
+});
 
 
 app.listen(port, () => {
