@@ -16,6 +16,7 @@ body {
             display: flex;
             align-items: center;
             justify-content: flex-start;
+            width: 80%;
             .box {
                 width: 15px;
                 height: 15px;
@@ -27,6 +28,7 @@ body {
                 color: skyblue;
                 text-decoration: underline;
                 margin: 0 0 0 40px;
+                cursor: pointer;
             }
         }
         .nest-content {
@@ -53,6 +55,33 @@ body {
         u {
             margin-left: 7px;
             color: skyblue;
+        }
+        .com-bin {
+            width: 100%;
+            p {
+                font-size: 10px;
+                color: gray;
+                width: 80%;
+            }
+            h5 {
+                width: 20%;
+            }
+        }
+        &.front {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: column;
+            .comments {
+                margin: 10px 0;
+                padding: 10px;
+                border: 1px solid pink;
+                border-radius: 5px;
+                width: 100%;
+                h5 {
+                    color: pink;
+                }
+            }
         }
     }
 }
@@ -149,6 +178,10 @@ button.with-loader:disabled {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 20 px 0;
+    margin: 20px 0;
+    max-width: 300px;
+    img {
+        width: 100%;
+        height: auto;
+    }
 }
-    
